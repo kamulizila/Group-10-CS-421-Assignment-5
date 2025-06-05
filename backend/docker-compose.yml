@@ -1,10 +1,8 @@
-version: '3.9'
-
 services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_DB: netumo
+      POSTGRES_DB: group_db
       POSTGRES_USER: netumo
       POSTGRES_PASSWORD: netumo
     volumes:
@@ -14,7 +12,7 @@ services:
     image: redis:alpine
 
   backend:
-    build: ./backend
+    build: .
     command: gunicorn mini_netumo.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./backend:/app
@@ -26,7 +24,7 @@ services:
       - redis
 
   worker:
-    build: ./backend
+    build: .
     command: celery -A mini_netumo worker -l info
     volumes:
       - ./backend:/app
@@ -36,7 +34,7 @@ services:
       - redis
 
   beat:
-    build: ./backend
+    build: .
     command: celery -A mini_netumo beat -l info
     volumes:
       - ./backend:/app
@@ -46,7 +44,7 @@ services:
       - redis
 
   vue-frontend:
-    build: ./vue-dashboard
+    build: .
     ports:
       - "3001:80"
 
