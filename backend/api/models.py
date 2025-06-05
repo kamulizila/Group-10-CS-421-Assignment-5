@@ -52,4 +52,5 @@ class DomainCheck(models.Model):
     checked_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Domain for {self.target_url.url} expires {self.expires_at}"  # Changed
+        return f"Domain for {self.target_url.url} expires {self.expires_at}"
+

@@ -2,7 +2,8 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
     TargetViewSet, StatusViewSet, HistoryViewSet,
-    AlertViewSet, SSLCheckViewSet, DomainCheckViewSet
+    AlertViewSet, SSLCheckViewSet, DomainCheckViewSet,
+    LatestStatusViewSet
 )
 
 router = DefaultRouter()
@@ -14,5 +15,7 @@ router.register(r'ssl-checks', SSLCheckViewSet)
 router.register(r'domain-checks', DomainCheckViewSet)
 
 urlpatterns = [
+    path('api/status/latest/', LatestStatusViewSet.as_view({'get': 'list'}), name='status-latest'),
     path('api/', include(router.urls)),
+    
 ]
