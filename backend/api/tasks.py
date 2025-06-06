@@ -148,3 +148,12 @@ def check_ssl_and_domain_expiry():
             msg = f"Failed SSL/domain check for {target.url}: {str(e)}"
             Alert.objects.create(target_url=target, message=msg)
             send_alert_email(msg, target)
+
+@shared_task
+def ping_all_targets():
+    """
+    Aggregated task to perform both status check and SSL/domain expiry checks
+    for all targets. This is useful for periodic scheduling via Celery Beat.
+    """
+    check_targets_status()
+    check_ssl_and_domain_expiry()

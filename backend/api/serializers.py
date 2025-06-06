@@ -61,3 +61,13 @@ class DomainCheckSerializer(serializers.ModelSerializer):
             return max(delta.days, 0)
         return None
 
+
+from rest_framework import serializers
+from .models import StatusLog
+
+class StatusLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StatusLog
+        fields = ['timestamp', 'status_code', 'response_time']  # include response_time
+
+

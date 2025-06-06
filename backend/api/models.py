@@ -54,3 +54,9 @@ class DomainCheck(models.Model):
     def __str__(self):
         return f"Domain for {self.target_url.url} expires {self.expires_at}"
 
+# api/models.py
+class StatusLog(models.Model):
+    target = models.ForeignKey(Target, on_delete=models.CASCADE)
+    status_code = models.IntegerField()
+    response_time = models.IntegerField(null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
